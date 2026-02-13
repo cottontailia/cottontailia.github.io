@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | {{ config.title }}</title>
+    
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    {% endif %}
+    
+    {% if page.extra.keywords %}
+    <meta name="keywords" content="{{ page.extra.keywords | join(sep=', ') }}">
+    {% endif %}
+    
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ config.base_url | safe }}{{ page.path }}">
+    {% if page.description %}
+    <meta property="og:description" content="{{ page.description }}">
+    {% endif %}
+    <meta property="og:image" content="https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    {% if page.description %}
+    <meta name="twitter:description" content="{{ page.description }}">
+    {% endif %}
+    <meta name="twitter:image" content="https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
+    
+    <link rel="canonical" href="{{ config.base_url | safe }}{{ page.path }}">
+    
+    <script type="application/ld+json">
+      {
+          "@context": "https://schema.org",
+          "@type": "TechArticle",
+          "headline": "{{ page.title | replace(from='"', to='\\"') }}",
+          "image": "https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px"
+          "author": {
+              "@type": "Person",
+              "name": "{% if page.extra.author %}{{ page.extra.author }}{% elif config.extra.author %}{{ config.extra.author }}{% else %}Anonymous{% endif %}"
+          },
+          "datePublished": "{{ page.date }}",
+          {% if page.description %}
+          "description": "{{ page.description | replace(from='"', to='\\"') }}",
+          {% endif %}
+          {% if page.extra.keywords %}
+          "keywords": "{{ page.extra.keywords | join(sep=', ') }}"{% endif %}{% if page.description or page.extra.keywords %},{% endif %}
+          "url": "{{ config.base_url | safe }}{{ page.path }}"
+          "image": "https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px"
+      }
+    </script>
+    
+    <style>
+      @font-face {
+          font-family: 'NumericFont';
+          src: local('Palatino'), local('Book Antiqua');
+          unicode-range: U+0030-0039;
+      }
+
+      :root {
+          --bg: #fbfaf5;
+          --text: #2c2c2c;
+          --link: #0056b3;
+          --toggle-bg: #f3f3f0;
+          --border: #e0e0d5;
+          --code-bg: #f0eee4;
+          --code-text: #1a1a1a;
+      }
+
+      body.dark {
+          --bg: #1e1e1e;
+          --text: #dcdcdc;
+          --link: #8ab4f8;
+          --toggle-bg: #2d2d2d;
+          --border: #4a4a4a;
+          --code-bg: #2d2d2d;
+          --code-text: #eaeaea;
+      }
+
+      body {
+          background-color: var(--bg);
+          color: var(--text);
+          font-family: 'NumericFont', 'Georgia', serif;
+          font-size: 1.125rem;
+          font-weight: 400;
+          line-height: 1.6;
+          max-width: 780px;
+          margin: 0 auto;
+          padding: 40px 24px;
+          transition: background-color 0.3s ease, color 0.3s ease;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          font-variant-ligatures: common-ligatures;
+          font-kerning: normal;
+      }
+
+      header {
+          margin-bottom: 60px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          min-height: 44px;
+          height: 60px;
+      }
+
+      .header-left,
+      .header-right {
+          display: flex;
+          align-items: center;
+          height: 100%;
+      }
+
+      .header-left a {
+          color: var(--link);
+          text-decoration: none;
+          font-weight: 600;
+          align-items: center;
+          line-height: 1;
+      }
+
+      .header-left a:hover {
+          text-decoration: underline;
+          text-underline-offset: 5px;
+      }
+
+      .article-header {
+          margin-bottom: 3rem;
+          display: block;
+      }
+
+      .article-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin: 0 0 0.75rem 0;
+          line-height: 1.2;
+          display: block;
+      }
+
+      .article-date {
+          color: var(--text);
+          opacity: 0.6;
+          font-size: 0.95rem;
+          font-weight: 400;
+          display: block;
+      }
+
+      article .content h2,
+      article .content h3 {
+          font-family: inherit;
+          font-weight: 700;
+          color: var(--text);
+          margin-top: 3.5rem;
+      }
+
+      article .content h2 {
+          font-size: 2rem;
+          border-bottom: 1px solid var(--border);
+          padding-bottom: 0.5rem;
+      }
+
+      article .content h3 {
+          font-size: 1.6rem;
+      }
+
+      pre,
+      pre code {
+          font-family: "Inconsolata", "Consolas", "Monaco", "Menlo", "Courier New", monospace !important;
+      }
+
+      pre {
+          padding: 1.5rem;
+          border-radius: 8px;
+          overflow-x: auto;
+          margin: 2.5rem 0;
+          font-size: 0.85rem;
+          line-height: 1.45;
+          border: 1px solid var(--border);
+      }
+
+      p > code,
+      li > code {
+          background: var(--code-bg);
+          color: var(--code-text);
+          padding: 0.15em 0.3em;
+          border-radius: 3px;
+          font-size: 0.8em;
+          font-family: inherit;
+          font-weight: bold;
+      }
+
+      a {
+          color: var(--link);
+          text-decoration: underline;
+          text-underline-offset: 5px;
+          transition: color 0.2s ease;
+      }
+
+      a:hover {
+          filter: brightness(0.85);
+      }
+
+      #mode-toggle {
+          background: var(--toggle-bg);
+          border: 1px solid var(--border);
+          color: var(--text);
+          padding: 8px 16px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: 0.85rem;
+          font-weight: bold;
+          transition: filter 0.2s ease;
+      }
+
+      #mode-toggle:hover {
+          filter: brightness(0.95);
+      }
+
+      hr {
+          border: none;
+          margin: 4.5rem 0;
+          text-align: center;
+      }
+
+      hr::after {
+          content: "§";
+          color: var(--text);
+          font-size: 1.2rem;
+          font-family: 'NumericFont', serif;
+          opacity: 0.8;
+      }
+
+      .end-mark {
+          margin: 6rem auto 4rem;
+          width: 30px;
+          border-top: 3px solid var(--text);
+          opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <header>
+      <div class="header-left">
+        <nav><a href="/">← Home</a></nav>
+      </div>
+      <div class="header-right">
+        <button id="mode-toggle"></button>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">{{ page.title }}</h1>
+          <div class="article-date">{{ page.date | date(format="%B %Y") }}</div>
+        </header>
+        <div class="content">
+          {{ page.content | safe }}
+        </div>
+      </article>
+    </main>
+
+    <div class="end-mark"></div>
+
+    <script>
+      const body = document.getElementById('body');
+      const btn = document.getElementById('mode-toggle');
+      function updateBtnLabel() {
+          btn.textContent = body.classList.contains('dark') ? '🌙 Dark' : '☀️ Light';
+      }
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+          body.classList.add('dark');
+      }
+      updateBtnLabel();
+      btn.addEventListener('click', () => {
+          body.classList.toggle('dark');
+          const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
+          localStorage.setItem('theme', currentTheme);
+          updateBtnLabel();
+      });
+    </script>
+  </body>
+</html>
