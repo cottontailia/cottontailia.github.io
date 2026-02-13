@@ -229,7 +229,7 @@ It's slow. Network-heavy.
 ### Weapon 2: Compiler Hijacking
 
 "MSYS2 is too heavy."  
-**Use Zig. A single 40MB binary.**
+**Use Zig. A single 200MB binary.**
 
 "But Emacs expects gcc."  
 **Then lie to it.**
