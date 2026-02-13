@@ -35,7 +35,7 @@
           "@context": "https://schema.org",
           "@type": "TechArticle",
           "headline": "{{ page.title | replace(from='"', to='\\"') }}",
-          "image": "https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px"
+          "image": "https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px",
           "author": {
               "@type": "Person",
               "name": "{% if page.extra.author %}{{ page.extra.author }}{% elif config.extra.author %}{{ config.extra.author }}{% else %}Anonymous{% endif %}"
@@ -47,7 +47,6 @@
           {% if page.extra.keywords %}
           "keywords": "{{ page.extra.keywords | join(sep=', ') }}"{% endif %}{% if page.description or page.extra.keywords %},{% endif %}
           "url": "{{ config.base_url | safe }}{{ page.path }}"
-          "image": "https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px"
       }
     </script>
     
@@ -95,7 +94,7 @@
           font-kerning: normal;
       }
 
-      header {
+      body > header {
           margin-bottom: 60px;
           display: flex;
           justify-content: space-between;
@@ -125,7 +124,7 @@
       }
 
       .article-header {
-          margin-bottom: 3rem;
+          margin-bottom: 1.5rem;
           display: block;
       }
 
@@ -217,6 +216,23 @@
           filter: brightness(0.95);
       }
 
+      body #mode-toggle::after {
+          content: "☀️ Light";
+      }
+
+      body.dark #mode-toggle::after {
+          content: "🌙 Dark";
+      }
+
+      @media (max-width: 480px) {
+          body #mode-toggle::after {
+              content: "☀️";
+          }
+          body.dark #mode-toggle::after {
+              content: "🌙";
+          }
+      }
+
       hr {
           border: none;
           margin: 4.5rem 0;
@@ -264,21 +280,16 @@
     <div class="end-mark"></div>
 
     <script>
-      const body = document.getElementById('body');
-      const btn = document.getElementById('mode-toggle');
-      function updateBtnLabel() {
-          btn.textContent = body.classList.contains('dark') ? '🌙 Dark' : '☀️ Light';
-      }
       const savedTheme = localStorage.getItem('theme');
+      const body = document.getElementById('body');
       if (savedTheme === 'dark') {
           body.classList.add('dark');
       }
-      updateBtnLabel();
+      const btn = document.getElementById('mode-toggle');
       btn.addEventListener('click', () => {
           body.classList.toggle('dark');
           const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
           localStorage.setItem('theme', currentTheme);
-          updateBtnLabel();
       });
     </script>
   </body>
