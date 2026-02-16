@@ -6,6 +6,7 @@ description = "Same Emacs, same config. Worked on macOS, died on Windows with AB
 [extra]
 keywords = ["emacs", "tree-sitter", "treesit", "ABI mismatch", "windows", "msys2", "mingw", "portability"]
 author = "cottontailia"
+title_suffix = "Emacs treesit-env.el"
 +++
 
 Same Emacs 29.2. Same config file.  

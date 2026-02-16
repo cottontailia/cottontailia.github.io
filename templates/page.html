@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | {{ config.title }}</title>
+    <title>{{ page.title }} | {{ page.extra.title_suffix | default(value=config.title) }}</title>
     
     {% if page.description %}
     <meta name="description" content="{{ page.description }}">
@@ -13,7 +13,7 @@
     <meta name="keywords" content="{{ page.extra.keywords | join(sep=', ') }}">
     {% endif %}
     
-    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:title" content="{{ page.title }} | {{ page.extra.title_suffix | default(value=config.title) }}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ config.base_url | safe }}{{ page.path }}">
     {% if page.description %}
@@ -22,7 +22,7 @@
     <meta property="og:image" content="https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:title" content="{{ page.title }} | {{ page.extra.title_suffix | default(value=config.title) }}">
     {% if page.description %}
     <meta name="twitter:description" content="{{ page.description }}">
     {% endif %}
