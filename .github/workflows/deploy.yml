@@ -17,23 +17,31 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      url_list: ${{ steps.extract_urls.outputs.list }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Install Zola
         run: |
           ZOLA_VERSION="0.22.1"
           wget -O - \
             "https://github.com/getzola/zola/releases/download/v${ZOLA_VERSION}/zola-v${ZOLA_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
             | tar xzf - -C /usr/local/bin
-      
+
       - name: Build with Zola
         run: zola build
-      
+
+      - name: Extract URLs from sitemap
+        id: extract_urls
+        run: |
+          LIST=$(sed -n 's/.*<loc>\(.*\)<\/loc>.*/"\1"/p' public/sitemap.xml | paste -sd "," -)
+          echo "list=$LIST" >> $GITHUB_OUTPUT
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -49,3 +57,18 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: IndexNow Notification
+        if: ${{ needs.build.outputs.url_list != '' }}
+        env:
+          URL_LIST: ${{ needs.build.outputs.url_list }}
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          curl -i -X POST "https://www.bing.com/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{
+              \"host\": \"cottontailia.github.io\",
+              \"key\": \"${INDEXNOW_KEY}\",
+              \"keyLocation\": \"https://cottontailia.github.io/${INDEXNOW_KEY}.txt\",
+              \"urlList\": [${URL_LIST}]
+            }"
