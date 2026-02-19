@@ -49,8 +49,25 @@
           "url": "{{ config.base_url | safe }}{{ page.path }}"
       }
     </script>
-    
+
+    <link rel="stylesheet" href="{{ get_url(path="giallo.css") }}">
     <style>
+      .giallo-l {
+          display: inline-block;
+          min-height: 1lh;
+          width: 100%;
+      }
+
+      [class^="z-"] {
+          color: #ffffff !important;
+          font-style: normal !important;
+      }
+
+      .z-comment { color: #ff7f24 !important; }
+      .z-keyword { color: #00ffff !important; font-weight: bold; }
+      .z-string  { color: #ffa07a !important; }
+      .z-function { color: #87cefa !important; }
+
       @font-face {
           font-family: 'NumericFont';
           src: local('Palatino'), local('Book Antiqua');

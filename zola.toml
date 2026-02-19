@@ -12,7 +12,8 @@ build_search_index = false
 [markdown]
 
 [markdown.highlighting]
-theme = "catppuccin-mocha"
+style = "class"
+theme = "catppuccin-frappe"
 
 [extra]
 author = "cottontailia"

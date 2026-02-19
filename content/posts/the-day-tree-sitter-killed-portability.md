@@ -1,6 +1,6 @@
 +++
 title = "The Day Tree-sitter Killed Portability"
-date = 2026-02-13
+date = 2026-02-19
 description = "Same Emacs, same config. Worked on macOS, died on Windows with ABI mismatch. How I built treesit-env to solve Tree-sitter's portability nightmare."
 
 [extra]
