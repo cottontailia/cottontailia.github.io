@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://cottontailia.github.io"
+base_url = "https://cottontailia.github.io/"
 title = "cottontailia.io"
 description = "A log of building, breaking, and fixing things in the Emacs ecosystem."
 
@@ -17,3 +17,4 @@ theme = "catppuccin-frappe"
 
 [extra]
 author = "cottontailia"
+keywords = ["emacs", "tree-sitter", "treesit", "programming", "oss"]

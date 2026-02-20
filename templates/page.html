@@ -15,7 +15,7 @@
     
     <meta property="og:title" content="{{ page.title }} | {{ page.extra.title_suffix | default(value=config.title) }}">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ config.base_url | safe }}{{ page.path }}">
+    <meta property="og:url" content="{{ page.permalink | safe }}">
     {% if page.description %}
     <meta property="og:description" content="{{ page.description }}">
     {% endif %}
@@ -28,7 +28,7 @@
     {% endif %}
     <meta name="twitter:image" content="https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
     
-    <link rel="canonical" href="{{ config.base_url | safe }}{{ page.path }}">
+    <link rel="canonical" href="{{ page.permalink | safe }}">
     
     <script type="application/ld+json">
       {
@@ -46,7 +46,7 @@
           {% endif %}
           {% if page.extra.keywords %}
           "keywords": "{{ page.extra.keywords | join(sep=', ') }}"{% endif %}{% if page.description or page.extra.keywords %},{% endif %}
-          "url": "{{ config.base_url | safe }}{{ page.path }}"
+          "url": "{{ page.permalink | safe }}"
       }
     </script>
 

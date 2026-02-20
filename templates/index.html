@@ -8,6 +8,36 @@
     {% if config.description %}
     <meta name="description" content="{{ config.description }}">
     {% endif %}
+
+    {% if config.extra.keywords %}
+    <meta name="keywords" content="{{ config.extra.keywords | join(sep=', ') }}">
+    {% endif %}
+
+    <link rel="canonical" href="{{ config.base_url | safe }}">
+
+    <meta property="og:title" content="{{ config.title }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ config.base_url | safe }}">
+    {% if config.description %}
+    <meta property="og:description" content="{{ config.description }}">
+    {% endif %}
+    <meta property="og:image" content="https://og-image.vercel.app/{{ config.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ config.title }}">
+    {% if config.description %}
+    <meta name="twitter:description" content="{{ config.description }}">
+    {% endif %}
+
+    <script type="application/ld+json">
+      {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "{{ config.title }}",
+          "url": "{{ config.base_url | safe }}",
+          "description": "{{ config.description }}"
+      }
+    </script>
     
     <style>
       @font-face {
