@@ -12,8 +12,10 @@
     {% if page.extra.keywords %}
     <meta name="keywords" content="{{ page.extra.keywords | join(sep=', ') }}">
     {% endif %}
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     
     <meta property="og:title" content="{{ page.title }} | {{ page.extra.title_suffix | default(value=config.title) }}">
+    <meta property="og:site_name" content="{{ config.title }}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ page.permalink | safe }}">
     {% if page.description %}
@@ -29,11 +31,15 @@
     <meta name="twitter:image" content="https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
     
     <link rel="canonical" href="{{ page.permalink | safe }}">
+    <link rel="sitemap" type="application/xml" href="{{ get_url(path='sitemap.xml', trailing_slash=false) }}">
+    <meta property="article:published_time" content="{{ page.date }}">
+    <meta property="article:author" content="{% if page.extra.author %}{{ page.extra.author }}{% elif config.extra.author %}{{ config.extra.author }}{% else %}Anonymous{% endif %}">
     
     <script type="application/ld+json">
       {
           "@context": "https://schema.org",
           "@type": "TechArticle",
+          "mainEntityOfPage": "{{ page.permalink | safe }}",
           "headline": "{{ page.title | replace(from='"', to='\\"') }}",
           "image": "https://og-image.vercel.app/{{ page.title | urlencode }}.png?theme=dark&md=1&fontSize=100px",
           "author": {

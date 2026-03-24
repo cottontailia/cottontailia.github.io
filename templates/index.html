@@ -12,10 +12,14 @@
     {% if config.extra.keywords %}
     <meta name="keywords" content="{{ config.extra.keywords | join(sep=', ') }}">
     {% endif %}
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 
     <link rel="canonical" href="{{ config.base_url | safe }}">
+    <link rel="sitemap" type="application/xml" href="{{ get_url(path='sitemap.xml', trailing_slash=false) }}">
+    <link rel="alternate" type="application/atom+xml" title="{{ config.title }} Atom Feed" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
 
     <meta property="og:title" content="{{ config.title }}">
+    <meta property="og:site_name" content="{{ config.title }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ config.base_url | safe }}">
     {% if config.description %}
@@ -28,6 +32,7 @@
     {% if config.description %}
     <meta name="twitter:description" content="{{ config.description }}">
     {% endif %}
+    <meta name="twitter:image" content="https://og-image.vercel.app/{{ config.title | urlencode }}.png?theme=dark&md=1&fontSize=100px">
 
     <script type="application/ld+json">
       {
